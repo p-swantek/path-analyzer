@@ -1,0 +1,6 @@
+<!-- <div [@nodeState]="traveled() ? 'traveled' : computedTransition()"  class="node"></div> -->
+
+@let state = computedTransition();
+@let isTraveled = traveled();
+
+<div [style.backgroundColor]="isTraveled ? 'green' : state === 'visited' ? 'yellow' : state === 'blocked' ? 'black' : 'blue'"  class="node"></div>

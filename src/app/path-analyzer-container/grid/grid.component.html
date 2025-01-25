@@ -1,0 +1,29 @@
+@for (row of nodeModels(); track $index) {
+  <div class="nodeContainer">
+
+    @for (node of row; track $index) {
+      @let startNode = start();
+      @let endNode = end();
+      @if(node.x === startNode.x && node.y === startNode.y){
+        <div class="node" [style.backgroundColor]="'orange'"></div>
+      }
+
+      @else if(node.x === endNode.x && node.y === endNode.y){
+        <div class="node" [style.backgroundColor]="'red'"></div>
+      }
+
+      @else {
+
+        <div class="node" [ngStyle]="{
+          'backgroundColor': node.nodeState === 'traveled' ? 'green' : node.nodeState === 'visited' ? 'yellow' : node.nodeState === 'blocked' ? 'black' : 'blue'
+         }"></div>
+      }
+
+
+
+    }
+
+  </div>
+}
+
+
