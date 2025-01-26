@@ -15,11 +15,12 @@ export class DepthFirstSearch implements PathFindAlgorithm{
 
 
     q.push(grid[start.x][start.y]);
+    visited[start.x][start.y] = true;
 
     while (q.length > 0) {
       let currentPoint = q.pop();
       visitedNodes.push(currentPoint);
-      visited[currentPoint.x][currentPoint.y] = true;
+
 
       if (currentPoint.x === end.x && currentPoint.y === end.y) {
         path = generateTravelPath(currentPoint, parentMap);
@@ -31,6 +32,7 @@ export class DepthFirstSearch implements PathFindAlgorithm{
         let nY = currentPoint.y + dir[1];
         if (isContainedInGrid(nX, nY, grid) && !visited[nX][nY] && grid[nX][nY].nodeState !== 'blocked') {
           let nextPoint = grid[nX][nY];
+          visited[nX][nY] = true;
           q.push(nextPoint);
           let nextPointKey = nextPoint.key();
           parentMap.set(nextPointKey,  currentPoint);

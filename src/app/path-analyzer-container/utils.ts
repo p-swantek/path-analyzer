@@ -17,9 +17,9 @@ export function toStream(emissionInterval: number = 100): OperatorFunction<GridN
   return source => source.pipe(
     switchMap(points => from(points).pipe(
 
-      concatMap(n => interval(emissionInterval).pipe(
+      concatMap(p => interval(emissionInterval).pipe(
         take(1),
-        map(() => n))
+        map(() => p))
       )
     ))
   )
@@ -55,5 +55,11 @@ export function generateDefaultGridState(rows: number, columns: number): GridNod
   }
   return nodeModels;
 
+}
+
+export function getRandomCooridinate(grid: GridNodeModel[][]): [number, number]{
+  let randX = Math.floor(Math.random() * (grid.length - 1 + 1)) + 1;
+  let randY = Math.floor(Math.random() * (grid[0].length - 1 + 1)) + 1;
+  return [randX, randY];
 }
 
