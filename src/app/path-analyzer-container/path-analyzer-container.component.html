@@ -7,5 +7,5 @@
       SHORTEST PATH LENGTH: {{traveledNum$ | async}}
     </div>
   </div>
-  <app-grid [nodeModels]="nodeModels" [start]="start" [end]="end"></app-grid>
+  <app-grid [nodeModels]="nodeModels" [start]="start" [end]="end" (nodeBlocked)="updateNodeBlockedState($event, true)" (nodeUnblocked)="updateNodeBlockedState($event, false)"></app-grid>
 </div>

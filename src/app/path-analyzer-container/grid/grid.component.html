@@ -14,7 +14,7 @@
 
       @else {
 
-        <div class="node" [ngStyle]="{
+        <div class="node" [matMenuTriggerFor]="nodeContextMenu" [matMenuTriggerData]="{n: node}" [ngStyle]="{
           'backgroundColor': node.nodeState === 'traveled' ? 'green' : node.nodeState === 'visited' ? 'yellow' : node.nodeState === 'blocked' ? 'black' : 'blue'
          }"></div>
       }
@@ -24,6 +24,13 @@
     }
 
   </div>
+
+  <mat-menu #nodeContextMenu>
+    <ng-template matMenuContent let-node="n">
+      <button mat-menu-item (click)="nodeBlocked.emit(node)">Block Node</button>
+      <button mat-menu-item (click)="nodeUnblocked.emit(node)">Unblock Node</button>
+    </ng-template>
+  </mat-menu>
 }
 
 

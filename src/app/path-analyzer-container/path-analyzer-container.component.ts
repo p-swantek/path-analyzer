@@ -1,10 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, scan, startWith, Subject, switchMap, takeLast, tap } from 'rxjs';
 import { DepthFirstSearch } from './graph-algorithms/depth-first-search';
 import { GridComponent } from "./grid/grid.component";
 import { GridNodeModel, PathFindAlgorithm } from './models';
 import { generateDefaultGridState, getRandomCooridinate, toStream } from './utils';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-path-analyzer-container',
@@ -27,8 +27,6 @@ export class PathAnalyzerContainerComponent implements OnInit {
     scan((prev, curr) => prev + curr, 0),
     startWith(0)
   );
-
-
 
 
   nodeModels: GridNodeModel[][];
@@ -66,6 +64,15 @@ export class PathAnalyzerContainerComponent implements OnInit {
     ).subscribe();
 
 
+  }
+
+  updateNodeBlockedState(node: GridNodeModel, isBlocked: boolean): void{
+    let existing = this.nodeModels[node.x][node.y];
+    existing = {
+      ...existing,
+      nodeState: isBlocked ? 'blocked' : 'unvisited'
+    };
+    this.nodeModels[node.x][node.y] = existing;
   }
 
 
