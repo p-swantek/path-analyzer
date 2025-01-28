@@ -1,0 +1,31 @@
+<form [formGroup]="configForm">
+
+  <div class="row">
+    <div class="col-6">
+
+      <mat-form-field>
+        <mat-label>Num Rows:</mat-label>
+        <input matInput  [formControlName]="'numRows'">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div class="col-6">
+
+      <mat-form-field>
+        <mat-label>Num Columns:</mat-label>
+        <input matInput  [formControlName]="'numCols'">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button mat-flat-button  (click)="updateGridSize()">Update Grid Size</button>
+    </div>
+
+  </div>
+
+</form>

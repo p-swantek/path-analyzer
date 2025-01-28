@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of, scan, startWith, Subject, switchMap, takeLast, tap } from 'rxjs';
 import { DepthFirstSearch } from './graph-algorithms/depth-first-search';
 import { GridComponent } from "./grid/grid.component";
-import { GridNodeModel, PathFindAlgorithm } from './models';
+import { GridConfiguration, GridNodeModel, PathFindAlgorithm } from './models';
 import { generateDefaultGridState, getRandomCooridinate, toStream } from './utils';
+import { ConfigurationsComponent } from './configurations/configurations.component';
 
 @Component({
   selector: 'app-path-analyzer-container',
-  imports: [GridComponent, AsyncPipe],
+  imports: [GridComponent, AsyncPipe, ConfigurationsComponent],
   templateUrl: './path-analyzer-container.component.html',
   styleUrl: './path-analyzer-container.component.scss'
 })
@@ -41,7 +42,7 @@ export class PathAnalyzerContainerComponent implements OnInit {
 
 
     [x, y] = getRandomCooridinate(this.nodeModels);
-    while (this.start.x == x && this.start.y === y){
+    while (this.start.x == x && this.start.y === y) {
       [x, y] = getRandomCooridinate(this.nodeModels);
     }
 
@@ -49,30 +50,34 @@ export class PathAnalyzerContainerComponent implements OnInit {
     this.start.nodeState = 'unvisited';
     this.end.nodeState = 'unvisited';
 
-    let result = this.algorithm.generatePath(this.start, this.end, this.nodeModels);
+    // let result = this.algorithm.generatePath(this.start, this.end, this.nodeModels);
 
 
-    of(result.visited).pipe(
-      toStream(10),
-      tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'visited' }),
-      tap(() => this.visitedNum.next(1)),
-      takeLast(1),
-      switchMap(() => of(result.shortestPath)),
-      toStream(10),
-      tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'traveled' }),
-      tap(() => this.traveledNum.next(1))
-    ).subscribe();
+    // of(result.visited).pipe(
+    //   toStream(10),
+    //   tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'visited' }),
+    //   tap(() => this.visitedNum.next(1)),
+    //   takeLast(1),
+    //   switchMap(() => of(result.shortestPath)),
+    //   toStream(10),
+    //   tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'traveled' }),
+    //   tap(() => this.traveledNum.next(1))
+    // ).subscribe();
 
 
   }
 
-  updateNodeBlockedState(node: GridNodeModel, isBlocked: boolean): void{
+  updateNodeBlockedState(node: GridNodeModel, isBlocked: boolean): void {
     let existing = this.nodeModels[node.x][node.y];
     existing = {
       ...existing,
       nodeState: isBlocked ? 'blocked' : 'unvisited'
     };
     this.nodeModels[node.x][node.y] = existing;
+  }
+
+  updateGridSize(config: GridConfiguration) {
+    this.nodeModels = generateDefaultGridState(config.numRows, config.numCols);
   }
 
 

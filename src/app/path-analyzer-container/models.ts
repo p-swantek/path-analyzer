@@ -1,3 +1,4 @@
+import { FormGroup, FormControl } from "@angular/forms";
 
 export type NodeState = 'unvisited' | 'visited' | 'blocked' | 'traveled';
 
@@ -25,3 +26,15 @@ export const DIRECTIONS: number[][] = [
   [0, 1],
   [0, -1],
 ]
+
+export type ModelFormGroup<T> = FormGroup<{
+  [K in keyof T]: FormControl<T[K]>;
+}>;
+
+export interface GridConfiguration{
+  numRows: number;
+  numCols: number;
+
+
+
+}
