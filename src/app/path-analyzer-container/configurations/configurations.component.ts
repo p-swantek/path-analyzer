@@ -18,6 +18,8 @@ export class ConfigurationsComponent implements OnInit{
   maxColumns = input<number>();
 
   gridSizeChanged = output<GridConfiguration>();
+  runPathAnalysis = output<void>();
+  resetGrid = output<void>();
 
   private formBuilder = inject(FormBuilder);
   configForm: ModelFormGroup<GridConfiguration>;

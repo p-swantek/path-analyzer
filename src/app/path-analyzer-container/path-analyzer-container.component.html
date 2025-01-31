@@ -11,7 +11,7 @@
     <div class="col-4">
       <app-configurations
       (gridSizeChanged)="updateGridSize($event)"
-      >
+      (runPathAnalysis)="runAnalysis()">
       </app-configurations>
     </div>
 
@@ -22,7 +22,8 @@
         [start]="start"
         [end]="end"
         (nodeBlocked)="updateNodeBlockedState($event, true)"
-        (nodeUnblocked)="updateNodeBlockedState($event, false)">
+        (nodeUnblocked)="updateNodeBlockedState($event, false)"
+        (mouseDownNodes)="onMouseNodeMouseDown($event)">
       </app-grid>
 
 

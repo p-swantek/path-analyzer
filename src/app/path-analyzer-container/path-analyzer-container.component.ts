@@ -14,6 +14,12 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
   styleUrl: './path-analyzer-container.component.scss'
 })
 export class PathAnalyzerContainerComponent implements OnInit {
+  //   switchMap(() => of(result.shortestPath)),
+  //   toStream(10),
+  //   tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'traveled' }),
+  //   tap(() => this.traveledNum.next(1))
+  // ).subscribe();
+
 
   private algorithm: PathFindAlgorithm = new DepthFirstSearch();//new BreadthFirstSearch();
   // private algorithm: PathFindAlgorithm = new BreadthFirstSearch();
@@ -78,6 +84,26 @@ export class PathAnalyzerContainerComponent implements OnInit {
 
   updateGridSize(config: GridConfiguration) {
     this.nodeModels = generateDefaultGridState(config.numRows, config.numCols);
+  }
+
+  onMouseNodeMouseDown(event: GridNodeModel) {
+    this.nodeModels[event.x][event.y] = {...event, nodeState: 'blocked'};
+  }
+
+  runAnalysis(): void {
+    let result = this.algorithm.generatePath(this.start, this.end, this.nodeModels);
+
+
+    of(result.visited).pipe(
+      toStream(10),
+      tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'visited' }),
+      tap(() => this.visitedNum.next(1)),
+      takeLast(1),
+      switchMap(() => of(result.shortestPath)),
+      toStream(10),
+      tap(p => this.nodeModels[p.x][p.y] = { ...p, nodeState: 'traveled' }),
+      tap(() => this.traveledNum.next(1))
+    ).subscribe();
   }
 
 

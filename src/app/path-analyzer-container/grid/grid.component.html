@@ -14,7 +14,7 @@
 
       @else {
 
-        <div class="node" [matMenuTriggerFor]="nodeContextMenu" [matMenuTriggerData]="{n: node}" [ngStyle]="{
+        <div (mouseover)="mouseOverSubject.next(node)" class="node" [matMenuTriggerFor]="nodeContextMenu" [matMenuTriggerData]="{n: node}" [ngStyle]="{
           'backgroundColor': node.nodeState === 'traveled' ? 'green' : node.nodeState === 'visited' ? 'yellow' : node.nodeState === 'blocked' ? 'black' : 'blue'
          }"></div>
       }
