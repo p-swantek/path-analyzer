@@ -58,8 +58,8 @@ export function generateDefaultGridState(rows: number, columns: number): GridNod
 }
 
 export function getRandomCooridinate(grid: GridNodeModel[][]): [number, number]{
-  let randX = Math.floor(Math.random() * (grid.length - 1));
-  let randY = Math.floor(Math.random() * (grid[0].length - 1));
+  let randX = Math.floor(Math.random() * (grid.length));
+  let randY = Math.floor(Math.random() * (grid[0].length));
   return [randX, randY];
 }
 
